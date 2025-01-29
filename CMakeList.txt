@@ -1,0 +1,21 @@
+cmake_minimum_required(VERSION 3.10)
+project(ChessEngine)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+
+# Lägg till src/ och include/
+include_directories(include)
+file(GLOB SOURCES "src/chess/*.cpp" "src/utils/*.cpp")
+
+add_executable(ChessEngine ${SOURCES})
+
+# Lägg till Googletest
+enable_testing()
+add_subdirectory(third_party/googletest)
+include_directories(third_party/googletest/googletest/include)
+
+add_executable(tests tests/BoardTests.cpp tests/MoveGeneratorTests.cpp)
+target_link_libraries(tests gtest_main)
+
+add_test(NAME ChessEngineTests COMMAND tests)
